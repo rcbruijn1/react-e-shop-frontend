@@ -1,4 +1,4 @@
-import { makeStyles, fade } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 export const useItemCardStyles = (shopItemImage) => makeStyles(theme => ({
     root: {
@@ -17,15 +17,9 @@ export const useItemCardStyles = (shopItemImage) => makeStyles(theme => ({
         backgroundRepeat: 'no-repeat', 
         backgroundPosition: 'center',
     },
-    addButton: {
-        color: theme.palette.success.main,
-        '&:hover': {
-            backgroundColor: fade(theme.palette.success.main, 0.12),
-        }
-    },
     cardActions: {
         justifyContent: 'space-between',
-        backgroundColor: theme.palette.secondary.light,
+        backgroundColor: theme.palette.primary.dark,
     },
 }));
 

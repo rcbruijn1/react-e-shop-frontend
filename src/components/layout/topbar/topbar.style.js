@@ -3,7 +3,7 @@ import { makeStyles } from '@material-ui/core/styles';
 export const useTopBarStyles = makeStyles(theme =>({
     appBar: {
         zIndex: theme.zIndex.drawer + 1,
-        backgroundColor: theme.palette.primary.main,
+        backgroundColor: theme.palette.primary.dark,
         color: theme.palette.secondary.light,
     },
 

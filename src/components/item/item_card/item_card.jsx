@@ -50,18 +50,18 @@ const ItemCard = ({ shopItem, handleZoom }) => {
                     <IconButton
                         onClick={addToFavourites}
                     >
-                        {favourite ? <FavoriteIcon color="error" /> : <FavoriteOutlinedIcon />}
+                        {favourite ? <FavoriteIcon color="error" /> : <FavoriteOutlinedIcon color="secondary" />}
                     </IconButton>
                     <IconButton
                         onClick={handleZoom}
                     >
-                        <InfoIcon />
+                        <InfoIcon color="secondary" />
                     </IconButton>
                 </div>
                 <IconButton
                     onClick={addToShoppingCart}
                 >
-                    <PlusIcon color="primary" />
+                    <PlusIcon color="secondary" />
                 </IconButton>
             </CardActions>
             </Card>

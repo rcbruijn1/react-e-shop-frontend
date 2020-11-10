@@ -4,8 +4,7 @@ export const useSideBarStyles = makeStyles(theme =>({
     drawer: {
         position: 'fixed',
         left: 0,
-        height: 'calc(100% - 64px)',
-        color: theme.palette.text.secondary,
+        height: `calc(100% - ${theme.spacing(8)}px)`,
         marginTop: theme.spacing(8),
         display: 'flex',
         flexDirection: 'column',
