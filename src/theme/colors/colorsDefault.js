@@ -1,13 +1,9 @@
 export const colorsDefault = {
     primary: {
-        light: '#94A6A4',
-        main: '#5A7370',
-        dark: '#2B4040',
+        main: '#1E1D40',
     },
     secondary: {
-        light: '#DFE6E4',
-        main: '#D2D9D8',
-        dark: '#575959',
+        main: '#4AB0D9',
     },
     error: {
         main: '#fa2d48',

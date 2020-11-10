@@ -15,6 +15,7 @@ import {
     DialogContent, 
     Divider, 
     IconButton, 
+    TextField, 
     Toolbar, 
     Typography, 
     Zoom,
@@ -31,6 +32,7 @@ const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 const TopBar = () => {
     const classes = useTopBarStyles();
     const [basketOpen, setBasketOpen] = useState(false);
+    const [accountOpen, setAccountOpen] = useState(false);
     const basketCounter = Math.floor(Math.random(1) * Math.floor(10));
 
     return (
@@ -62,7 +64,7 @@ const TopBar = () => {
                         </Badge>
                         <IconButton
                         color="secondary"
-                        onClick={() => setBasketOpen(true)}
+                        onClick={() => setAccountOpen(true)}
                         >
                             <UserIcon />
                         </IconButton>
@@ -83,6 +85,18 @@ const TopBar = () => {
                     Done
                 </Button>
                 </DialogActions>
+            </Dialog>
+
+            <Dialog open={accountOpen} TransitionComponent={Transition} keepMounted classes={{ paper: classes.dialogPaper }}>
+                <DialogContent>
+                    <Box p={3} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
+                        <Box display="flex" flexDirection="column">
+                            <TextField />
+                            <TextField />
+                        </Box>
+                        <Button variant="contained" color="primary">Confirm</Button>
+                    </Box>
+                </DialogContent>
             </Dialog>
         </Fragment>
     )
