@@ -13,8 +13,4 @@ export const useTopBarStyles = makeStyles(theme =>({
             padding: theme.spacing(0, 0, 0, 1.5),
         },
     },
-
-    dialogPaper: {
-        minHeight: '50vh',
-      },
 }));

@@ -15,7 +15,6 @@ import {
     DialogContent, 
     Divider, 
     IconButton, 
-    TextField, 
     Toolbar, 
     Typography, 
     Zoom,
@@ -26,6 +25,7 @@ import { useTopBarStyles } from './topbar.style';
 
 // Assets
 import logo from '../../../logo.svg';
+import { LoginForm } from '../../forms/User';
 
 const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
@@ -87,15 +87,15 @@ const TopBar = () => {
                 </DialogActions>
             </Dialog>
 
-            <Dialog open={accountOpen} TransitionComponent={Transition} keepMounted classes={{ paper: classes.dialogPaper }}>
+            <Dialog
+                fullWidth
+                maxWidth="sm"
+                open={accountOpen} 
+                TransitionComponent={Transition} 
+                keepMounted 
+            >
                 <DialogContent>
-                    <Box p={3} display="flex" flexDirection="column" justifyContent="space-between" height="100%">
-                        <Box display="flex" flexDirection="column">
-                            <TextField />
-                            <TextField />
-                        </Box>
-                        <Button variant="contained" color="primary">Confirm</Button>
-                    </Box>
+                    <LoginForm />
                 </DialogContent>
             </Dialog>
         </Fragment>

@@ -17,6 +17,15 @@ export const createTheme = name => createMuiTheme({
   palette: {
       ...colorsMap[name],
   },
+
+  overrides: {
+    MuiDialogContent: {
+      root: {
+        padding: 24,
+      },
+    },
+  },
+
   scrollbar: {
     '&::-webkit-scrollbar': {
       width: 10,
