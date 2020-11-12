@@ -3,6 +3,9 @@ const { GraphQLServer } = require('graphql-yoga');
 const mongoose = require('mongoose');
 const express = require('express');
 const app = express();
+const cors = require('cors');
+
+app.use(cors());
 
 const userResolvers = require('./graphql/resolvers/User.resolver');
 const userSchema = require('./graphql/schemas/User.schema');

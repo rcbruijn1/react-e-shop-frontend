@@ -1,6 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './components';
+import { ApolloClient, ApolloProvider, InMemoryCache } from '@apollo/client';
 import { ThemeProvider } from '@material-ui/core';
 import * as serviceWorker from './serviceWorker';
 
@@ -8,10 +9,17 @@ import * as serviceWorker from './serviceWorker';
 import { CssBaseline } from '@material-ui/core';
 import { createTheme } from './theme/theme.index';
 
+const client = new ApolloClient({
+  uri: 'http://localhost:4000',
+  cache: new InMemoryCache(),
+});
+
 ReactDOM.render(
   <ThemeProvider theme={createTheme('defaultTheme')}>
     <CssBaseline>
-      <App />
+      <ApolloProvider client={client}>
+        <App />
+      </ApolloProvider>
     </CssBaseline>
   </ThemeProvider>,
   document.getElementById('root')

@@ -25,7 +25,7 @@ import { useTopBarStyles } from './topbar.style';
 
 // Assets
 import logo from '../../../logo.svg';
-import { LoginForm } from '../../forms/User';
+import { RegisterForm } from '../../forms/User';
 
 const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
@@ -95,7 +95,7 @@ const TopBar = () => {
                 keepMounted 
             >
                 <DialogContent>
-                    <LoginForm />
+                    <RegisterForm handleClose={() => setAccountOpen(false)} />
                 </DialogContent>
             </Dialog>
         </Fragment>
