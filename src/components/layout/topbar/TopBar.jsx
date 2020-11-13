@@ -1,7 +1,7 @@
 import React, { Fragment, useState, forwardRef } from 'react';
 
 // Icons
-import { ShoppingCartOutlined } from '@material-ui/icons';
+import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import UserIcon from '@material-ui/icons/PersonOutline';
 
 // Core
@@ -20,13 +20,13 @@ import {
     Typography, 
     Zoom,
 } from '@material-ui/core';
+import { RegisterForm, LoginForm } from '../../forms/User';
 
 // Styles
 import { useTopBarStyles } from './topbar.style';
 
 // Assets
 import logo from '../../../logo.svg';
-import { RegisterForm, LoginForm } from '../../forms/User';
 
 const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
@@ -35,6 +35,8 @@ const TopBar = () => {
     const [basketOpen, setBasketOpen] = useState(false);
     const [accountOpen, setAccountOpen] = useState({ dialogOpen: false, tab: null });
     const basketCounter = Math.floor(Math.random(1) * Math.floor(10));
+
+    console.log(accountOpen);
 
     return (
         <Fragment>
@@ -60,7 +62,7 @@ const TopBar = () => {
                                 color="secondary"
                                 onClick={() => setBasketOpen(true)}
                             >
-                                <ShoppingCartOutlined/>
+                                <ShoppingCartIcon/>
                             </IconButton>
                         </Badge>
                         <IconButton
@@ -97,21 +99,26 @@ const TopBar = () => {
             >
                 <DialogContent>
                     {!accountOpen.tab && (
-                        <Fragment>
-                            <Box p={3} height="100%" width="50%">
-                                <Link onClick={() => setAccountOpen({ dailogOpen: accountOpen.dialogOpen, tab: 'login'})}>
-                                    Login
+                        <Box display="flex" minHeight={250}>
+                            <Box width="50%" display="flex" justifyContent="center" alignItems="center">
+                                <Link onClick={() => setAccountOpen({ dialogOpen: accountOpen.dialogOpen, tab: 'login'})}>
+                                    <Typography variant="h6">
+                                        Login
+                                    </Typography>
                                 </Link>
                             </Box>
-                            <Box p={3} height="100%" width="50%">
-                                <Link onClick={() => setAccountOpen({ dailogOpen: accountOpen.dialogOpen, tab: 'register'})}>
-                                    Register
+                            <Divider flexItem orientation="vertical" />                          
+                            <Box width="50%" display="flex" justifyContent="center" alignItems="center">
+                                <Link onClick={() => setAccountOpen({ dialogOpen: accountOpen.dialogOpen, tab: 'register'})}>
+                                    <Typography variant="h6">
+                                        Register
+                                    </Typography>
                                 </Link>
                             </Box>
-                        </Fragment>
+                        </Box>
                     )}
-                    {accountOpen.dialogOpen && accountOpen.tab === 'login' &&  <LoginForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
-                    {accountOpen.dialogOpen && accountOpen.tab === 'register' && <RegisterForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
+                    {accountOpen.tab === 'login' &&  <LoginForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
+                    {accountOpen.tab === 'register' && <RegisterForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
                 </DialogContent>
             </Dialog>
         </Fragment>
