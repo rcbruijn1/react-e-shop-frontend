@@ -15,6 +15,7 @@ import {
     DialogContent, 
     Divider, 
     IconButton, 
+    Link, 
     Toolbar, 
     Typography, 
     Zoom,
@@ -25,14 +26,14 @@ import { useTopBarStyles } from './topbar.style';
 
 // Assets
 import logo from '../../../logo.svg';
-import { RegisterForm } from '../../forms/User';
+import { RegisterForm, LoginForm } from '../../forms/User';
 
 const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
 const TopBar = () => {
     const classes = useTopBarStyles();
     const [basketOpen, setBasketOpen] = useState(false);
-    const [accountOpen, setAccountOpen] = useState(false);
+    const [accountOpen, setAccountOpen] = useState({ dialogOpen: false, tab: null });
     const basketCounter = Math.floor(Math.random(1) * Math.floor(10));
 
     return (
@@ -64,7 +65,7 @@ const TopBar = () => {
                         </Badge>
                         <IconButton
                         color="secondary"
-                        onClick={() => setAccountOpen(true)}
+                        onClick={() => setAccountOpen({ dialogOpen: true, tab: null })}
                         >
                             <UserIcon />
                         </IconButton>
@@ -90,12 +91,27 @@ const TopBar = () => {
             <Dialog
                 fullWidth
                 maxWidth="sm"
-                open={accountOpen} 
+                open={accountOpen.dialogOpen} 
                 TransitionComponent={Transition} 
                 keepMounted 
             >
                 <DialogContent>
-                    <RegisterForm handleClose={() => setAccountOpen(false)} />
+                    {!accountOpen.tab && (
+                        <Fragment>
+                            <Box p={3} height="100%" width="50%">
+                                <Link onClick={() => setAccountOpen({ dailogOpen: accountOpen.dialogOpen, tab: 'login'})}>
+                                    Login
+                                </Link>
+                            </Box>
+                            <Box p={3} height="100%" width="50%">
+                                <Link onClick={() => setAccountOpen({ dailogOpen: accountOpen.dialogOpen, tab: 'register'})}>
+                                    Register
+                                </Link>
+                            </Box>
+                        </Fragment>
+                    )}
+                    {accountOpen.dialogOpen && accountOpen.tab === 'login' &&  <LoginForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
+                    {accountOpen.dialogOpen && accountOpen.tab === 'register' && <RegisterForm handleClose={() => setAccountOpen({ dialogOpen: false, tab: null })} />}
                 </DialogContent>
             </Dialog>
         </Fragment>
