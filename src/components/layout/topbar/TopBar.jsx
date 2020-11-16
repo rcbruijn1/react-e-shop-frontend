@@ -20,7 +20,7 @@ import {
     Typography, 
     Zoom,
 } from '@material-ui/core';
-import { RegisterForm, LoginForm } from '../../forms/User';
+import { RegisterForm, LoginForm, CreateShopItemForm } from '../../forms';
 
 // Styles
 import { useTopBarStyles } from './topbar.style';

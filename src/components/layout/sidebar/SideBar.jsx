@@ -1,8 +1,13 @@
-import React from 'react';
+import React, { useState } from 'react';
 import clsx from 'clsx';
+import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
 import SecurityIcon from '@material-ui/icons/Security';
+import OverviewIcon from '@material-ui/icons/AppsOutlined';
+import FavouritesIcon from '@material-ui/icons/FavoriteBorderOutlined';
+import CategoryIcon from '@material-ui/icons/ListOutlined';
+import SearchIcon from '@material-ui/icons/SearchOutlined';
 
 // Core
 import { 
@@ -15,16 +20,45 @@ import {
     useTheme, 
 } from '@material-ui/core';
 
+// Routing
+import { ADMIN_PATH, OVERVIEW_PATH } from '../../../routing/paths';
+
 // Style
 import { useSideBarStyles } from './sidebar.style';
-import { useState } from 'react';
-import { ContactSupportOutlined, FavoriteBorderOutlined, ListOutlined, SearchOutlined } from '@material-ui/icons';
 
 const SideBar = () => {
     const classes = useSideBarStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
     const [drawerOpen, setDrawerOpen] = useState(false);
+
+    const history = useHistory();
+    const location = useLocation();
+
+    const isActive = path => path === location.pathname;
+
+    const listItems = [
+        {
+            label: 'Overview',
+            path: OVERVIEW_PATH,
+            icon: <OverviewIcon color="primary" />
+        },
+        {
+            label: 'Search',
+            path: '',
+            icon: <SearchIcon color="primary" />
+        },
+        {
+            label: 'Categories',
+            path: '',
+            icon: <CategoryIcon color="primary" />
+        },
+        {
+            label: 'Favourites',
+            path: '',
+            icon: <FavouritesIcon color="primary" />
+        },
+    ]
 
     return (
         <Drawer
@@ -45,36 +79,31 @@ const SideBar = () => {
             onMouseLeave={() => setDrawerOpen(false)}
         >
             <List disablePadding>
-                <ListItem button className={classes.listItem}>
-                    <ListItemIcon>
-                        <SearchOutlined color="primary" />
-                    </ListItemIcon>
-                    <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary="Search" />
-                </ListItem>
-                <ListItem button className={classes.listItem}>
-                    <ListItemIcon><ListOutlined color="primary" /></ListItemIcon>
-                    <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary="Categories" />
-                </ListItem>
-                <ListItem button className={classes.listItem}>
-                    <ListItemIcon>
-                        <FavoriteBorderOutlined color="primary" />
-                    </ListItemIcon>
-                    <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary="Favourites" />
-                </ListItem>
+                {listItems.map(listItem => (
+                    <ListItem 
+                        key={listItem.label} 
+                        button={!isActive(listItem.path)}
+                        className={isActive(listItem.path) ? classes.listItemActive : classes.listItem} 
+                        onClick={() => history.push(listItem.path)}
+                    >
+                        <ListItemIcon>
+                            {listItem.icon}
+                        </ListItemIcon>
+                        <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary={listItem.label} />
+                    </ListItem>
+                ))}
             </List>
 
             <List disablePadding>
-                <ListItem button className={classes.listItem}>
+                <ListItem
+                    button={!isActive(ADMIN_PATH)}
+                    className={isActive(ADMIN_PATH) ? classes.listItemActive : classes.listItem} 
+                    onClick={() => history.push(ADMIN_PATH)}
+                >
                     <ListItemIcon>
                         <SecurityIcon color="primary" />
                     </ListItemIcon>
                     <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary="Admin Panel" />
-                </ListItem>
-                <ListItem button className={classes.listItem}>
-                    <ListItemIcon>
-                        <ContactSupportOutlined color="primary" />
-                    </ListItemIcon>
-                    <ListItemText primaryTypographyProps={{ noWrap: true, color: 'primary' }} primary="Support" />
                 </ListItem>
             </List>
         </Drawer>

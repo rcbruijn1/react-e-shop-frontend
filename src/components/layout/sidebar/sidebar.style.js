@@ -37,4 +37,9 @@ export const useSideBarStyles = makeStyles(theme =>({
         backgroundColor: fade(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       },
     },
+
+    listItemActive: {
+      backgroundColor: theme.palette.secondary.light,
+      borderBottom: theme.border(theme.palette.primary.dark),
+    },
 }));
