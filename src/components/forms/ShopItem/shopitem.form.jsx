@@ -10,7 +10,7 @@ import {
 import TextField from '../../fields/TextField';
 
 // Queries
-import { CREATE_SHOP_ITEM } from '../../../grapql/ShopItem.mutations';
+import { CREATE_SHOP_ITEM } from '../../../graphql/ShopItem.mutations';
 
 
 const CreateShopItemForm = () => {

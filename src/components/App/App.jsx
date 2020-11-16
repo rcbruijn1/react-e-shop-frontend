@@ -6,8 +6,8 @@ import { Route, Redirect, Switch } from 'react-router-dom';
 import { TopBar, BottomBar, SideBar } from '../../components' ;
 
 // Routing
-import { ROUTES } from '../../routing/routes';
-import { OVERVIEW_PATH } from '../../routing/paths';
+import { ROUTES } from '../../routes/routes';
+import { OVERVIEW_PATH } from '../../routes/paths';
 
 // Styles
 import { useAppStyles } from './App.style';

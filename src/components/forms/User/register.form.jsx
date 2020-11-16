@@ -11,7 +11,7 @@ import {
 import TextField from '../../fields/TextField';
 
 // Queries
-import { CREATE_USER } from '../../../grapql/User.mutations';
+import { CREATE_USER } from '../../../graphql/User.mutations';
 
 
 const RegisterForm = ({ handleClose }) => {

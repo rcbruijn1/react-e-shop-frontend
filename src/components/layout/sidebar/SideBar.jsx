@@ -21,7 +21,7 @@ import {
 } from '@material-ui/core';
 
 // Routing
-import { ADMIN_PATH, OVERVIEW_PATH } from '../../../routing/paths';
+import { ADMIN_PATH, OVERVIEW_PATH } from '../../../routes/paths';
 
 // Style
 import { useSideBarStyles } from './sidebar.style';
