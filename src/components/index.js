@@ -5,6 +5,7 @@ export { default as Main } from './layout/main/Main';
 export { default as TopBar } from './layout/topbar/TopBar';
 export { default as BottomBar } from './layout/bottombar/BottomBar';
 export { default as SideBar } from './layout/sidebar/SideBar';
+export { default as Toolbar } from './layout/toolbar/Toolbar';
 
 // Item
 export { default as ItemCardContainer } from './item/item_card_container/item_card_container';

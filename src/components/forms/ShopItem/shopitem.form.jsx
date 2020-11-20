@@ -2,20 +2,20 @@ import React from 'react';
 import { Controller, useForm } from 'react-hook-form';
 import { useMutation } from '@apollo/client';
 import { useSnackbar } from 'notistack';
+import PropTypes from 'prop-types';
 
 // Core
-import { 
-    Box, Button, Divider, Typography,
-} from '@material-ui/core';
-import TextField from '../../fields/TextField';
+import { Box, Button, Divider, Typography } from '@material-ui/core';
+import { SelectField, TextField } from '../../fields';
 
 // Queries
 import { CREATE_SHOP_ITEM } from '../../../graphql/ShopItem.mutations';
 
 
-const CreateShopItemForm = () => {
+const CreateShopItemForm = ({ categories }) => {
     const { handleSubmit, errors, control } = useForm();
     const { enqueueSnackbar } = useSnackbar();
+    const itemCategories = categories.filter(item => item !== 'all');
 
     const [createShopItem] = useMutation(CREATE_SHOP_ITEM, {
         onCompleted: data => {
@@ -33,13 +33,13 @@ const CreateShopItemForm = () => {
 
     return (
         <form onSubmit={handleSubmit(handleSubmitForm)}>
-            <Typography variant="h6" color="primary" gutterBottom>
+            <Typography variant="body1" color="primary" gutterBottom>
                 Create Shop Item
             </Typography>
 
-            <Divider light />
+            <Divider />
 
-            <Box py={3} height="100%" display="flex" flexDirection="column">
+            <Box py={3} height="100%" width="50%" display="flex" flexDirection="column">
 
                 <Controller
                     as={TextField}
@@ -68,14 +68,14 @@ const CreateShopItemForm = () => {
                     required
                 />
                 
-                {/* Make SelectField */}
                 <Controller
-                    as={TextField}
+                    as={SelectField}
                     label="Category"
                     name="category"
                     control={control}
                     errors={errors}
                     required
+                    items={itemCategories}
                 />
 
                 <Controller
@@ -86,13 +86,17 @@ const CreateShopItemForm = () => {
                     errors={errors}
                     required
                 />
-            </Box>
 
             <Button variant="contained" color="primary" fullWidth type="submit">
-                Submit
+                Add
             </Button>
+            </Box>
         </form>
     )
+};
+
+CreateShopItemForm.propTypes = {
+    categories: PropTypes.array.isRequired,
 };
 
 export default CreateShopItemForm;

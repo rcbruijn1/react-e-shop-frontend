@@ -3,14 +3,17 @@ import { createMuiTheme } from '@material-ui/core/styles';
 // Colors
 import {
   colorsDefault,
+  colorsDark,
 } from './colors';
 
 export const THEMES = {
   defaultTheme: 'defaultTheme',
+  darkTheme: 'darkTheme',
 };
 
 const colorsMap = {
   [THEMES.defaultTheme]: colorsDefault,
+  [THEMES.darkTheme]: colorsDark,
 };
 
 export const createTheme = name => createMuiTheme({
@@ -22,6 +25,11 @@ export const createTheme = name => createMuiTheme({
     MuiDialogContent: {
       root: {
         padding: 24,
+      },
+    },
+    MuiDivider: {
+      root: {
+        backgroundColor: colorsMap[name].primary.main,
       },
     },
   },

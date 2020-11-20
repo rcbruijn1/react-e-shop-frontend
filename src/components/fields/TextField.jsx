@@ -37,11 +37,12 @@ const TextField = props => {
             helperText={helperText}
             // error={!!errorText}
             variant="outlined" 
-            margin="normal" 
+            margin="dense" 
             color="primary"
             InputProps={{
                 startAdornment: icon,
                 classes: {
+                    root: classes.inputRoot,
                     notchedOutline: classes.outline,
                 },
             }}

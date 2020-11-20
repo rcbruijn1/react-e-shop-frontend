@@ -15,7 +15,7 @@ import { useAppStyles } from './App.style';
 
 const App = () => {
   const classes = useAppStyles();
-  console.log(ROUTES);
+
   return (
     <div className={classes.wrapper}>
       <SnackbarProvider 
@@ -26,6 +26,7 @@ const App = () => {
         }}
       >
         <TopBar />
+        
         <SideBar />
 
         <Switch>

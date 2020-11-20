@@ -6,8 +6,8 @@ import { Router } from 'react-router-dom';
 import { createBrowserHistory } from 'history';
 
 //Core
-import { CssBaseline, ThemeProvider } from '@material-ui/core';
-import { createTheme } from './theme/theme.index';
+import { CssBaseline } from '@material-ui/core';
+import { ThemeProvider } from './providers/Theme.provider';
 
 const client = new ApolloClient({
   uri: 'https://react-e-shop-backend.herokuapp.com/graphql' || 'http://localhost:4000/graphql',
@@ -17,7 +17,7 @@ const client = new ApolloClient({
 const history = createBrowserHistory();
 
 ReactDOM.render(
-  <ThemeProvider theme={createTheme('defaultTheme')}>
+  <ThemeProvider>
     <CssBaseline>
       <ApolloProvider client={client}>
         <Router history={history}>

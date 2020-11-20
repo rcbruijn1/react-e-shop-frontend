@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import clsx from 'clsx';
+import PropTypes from 'prop-types';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
@@ -26,7 +27,7 @@ import { ADMIN_PATH, OVERVIEW_PATH } from '../../../routes/paths';
 // Style
 import { useSideBarStyles } from './sidebar.style';
 
-const SideBar = () => {
+const SideBar = ({ categories }) => {
     const classes = useSideBarStyles();
     const theme = useTheme();
     const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
@@ -108,6 +109,10 @@ const SideBar = () => {
             </List>
         </Drawer>
     );
+};
+
+SideBar.propTypes = {
+    categories: PropTypes.array,
 };
 
 export default SideBar;

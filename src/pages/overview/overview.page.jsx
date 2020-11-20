@@ -1,16 +1,16 @@
-import React, { Fragment, useState } from 'react';
+import React, { Fragment, useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Core
-import { ItemCard, ItemCardContainer, ItemCardZoomed, Main } from '../../components';
+import { ItemCard, ItemCardContainer, ItemCardZoomed, Main, SideBar, Toolbar } from '../../components';
 
 // Utils
 import { filterByCategory, retrieveAllCategories } from '../../helpers/shopItems.helper';
 
 // GraphQL
 import { GET_SHOP_ITEMS } from '../../graphql/ShopItem.queries';
-import { Box, Dialog, MenuItem, Select } from '@material-ui/core';
-import { useEffect } from 'react';
+import { Box, CircularProgress, Dialog } from '@material-ui/core';
+import { SelectField } from '../../components/fields';
 
 const GetShopItems = () => {
   const { loading, data } = useQuery(GET_SHOP_ITEMS, {
@@ -44,23 +44,23 @@ const OverviewPage = () => {
       setCatalogus(shopItems);
     }, [!loading])
   
-    if (loading) return null;
+    if (loading) return (
+      <Box height="100%" width="100%" display="flex" alignItems="center" justifyContent="center">
+          <CircularProgress color="primary" />
+      </Box>
+      );
 
     return (
         <Fragment>
+          <SideBar categories={categories} />
             <Main>
-                <Box width="100%" p={2} bgcolor="rgba(0,0,0, 0.12)" display="flex" justifyContent="center">
-                  <Select
-                    variant="outlined"
-                    value={categoryState}
-                    onChange={event => handleChange(event.target.value)}
-                  >
-                    <MenuItem value="all">All</MenuItem>
-                    {categories.map(category => (
-                      <MenuItem key={category} value={category}>{category}</MenuItem>
-                    ))}
-                  </Select>
-                </Box>
+              <Toolbar>
+                <SelectField
+                      value={categoryState}
+                      items={categories}
+                      onChange={event => handleChange(event.target.value)}
+                />
+              </Toolbar>
                 <ItemCardContainer>
                 {catalogus && catalogus.map(item => (
                     <ItemCard key={item.id} shopItem={item} handleZoom={() => renderItemCardZoomed(item)} />

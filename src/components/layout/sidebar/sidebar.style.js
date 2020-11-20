@@ -33,12 +33,14 @@ export const useSideBarStyles = makeStyles(theme =>({
     },
 
     listItem: {
+      minHeight: theme.spacing(7),
       '&:hover': {
         backgroundColor: fade(theme.palette.primary.main, theme.palette.action.selectedOpacity),
       },
     },
 
     listItemActive: {
+      minHeight: theme.spacing(7),
       backgroundColor: theme.palette.secondary.light,
       borderBottom: theme.border(theme.palette.primary.dark),
     },

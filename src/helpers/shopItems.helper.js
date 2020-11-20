@@ -7,7 +7,7 @@ export const filterByCategory = (category, assets) => {
 }
 
 export const retrieveAllCategories = assets => {
-    const categories = [];
+    const categories = ['all'];
     let array = assets;
 
     for (let i = 0; i < array.length; i++) {
@@ -19,6 +19,6 @@ export const retrieveAllCategories = assets => {
             array = array.filter(item => item.category !== target);
         }
     }
-    
+
     return categories;
 }
