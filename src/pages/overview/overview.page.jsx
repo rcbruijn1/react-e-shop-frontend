@@ -53,7 +53,7 @@ const OverviewPage = () => {
     return (
         <Fragment>
           <SideBar categories={categories} />
-            <Main>
+            <Main withToolbar>
               <Toolbar>
                 <SelectField
                       value={categoryState}

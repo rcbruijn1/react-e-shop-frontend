@@ -23,12 +23,11 @@ const SelectField = props => {
       } = props;
 
     const classes = useFieldStyles();
-
     // const errorText = errors && errors[id];
 
     return (
         <MuiSelectField 
-            style={{ maxHeight: 40, minWidth: 150, marginBottom: 12 }}
+            style={{ maxHeight: 40, minWidth: 150 }}
             {...rest}
             label={label}
             value={value ||  ''}
