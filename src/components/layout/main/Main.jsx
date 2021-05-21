@@ -5,25 +5,25 @@ import clsx from 'clsx';
 // Styles
 import { useMainStyles } from './main.style';
 
-const Main = ({ children, withToolbar }) => {
-    const classes = useMainStyles();
+const Main = ({ children, withSidebar }) => {
+  const classes = useMainStyles();
 
-    return (
-        <div className={
-            clsx(
-                classes.main, 
-                {[classes.mainWithToolbar]:withToolbar}, 
-                classes.scrollbar
-            )}
-        >
-            {children}
-        </div>
-    );
+  return (
+    <div className={
+      clsx(
+        classes.main, 
+        {[classes.mainWithSidebar]: withSidebar}, 
+        classes.scrollbar
+      )}
+    >
+      {children}
+    </div>
+  );
 };
 
 Main.propTypes = {
     children: PropTypes.node.isRequired,
-    withToolbar: PropTypes.bool,
+    withSidebar: PropTypes.bool,
 };
 
 export default Main;

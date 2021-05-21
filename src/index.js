@@ -8,9 +8,10 @@ import { createBrowserHistory } from 'history';
 //Core
 import { CssBaseline } from '@material-ui/core';
 import { ThemeProvider } from './providers/Theme.provider';
+import StoreProvider from './providers/store.provider';
 
 const client = new ApolloClient({
-  uri: 'https://react-e-shop-backend.herokuapp.com/graphql' || 'http://localhost:4000/graphql',
+  uri: 'https://react-e-shop-back-end.herokuapp.com/graphql' || 'http://localhost:4000/graphql',
   cache: new InMemoryCache(),
 });
 
@@ -21,7 +22,9 @@ ReactDOM.render(
     <CssBaseline>
       <ApolloProvider client={client}>
         <Router history={history}>
-          <App />
+          <StoreProvider>
+            <App />
+          </StoreProvider>
         </Router>
       </ApolloProvider>
     </CssBaseline>

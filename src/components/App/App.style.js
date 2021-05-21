@@ -15,9 +15,8 @@ export const useAppStyles = makeStyles(theme =>({
     wrapper: {
       width: '100vw',
       height: '100vh',
-      [theme.breakpoints.up('md')]: {
-        display: 'flex'
-      },
+      display: 'flex',
+      flexDirection: 'column',
       [theme.breakpoints.down('sm')]: {
         width: '100%',
         height: '100%',

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, Fragment, useContext } from 'react';
 import PropTypes from 'prop-types';
 import { useSnackbar } from 'notistack';
 
@@ -9,17 +9,39 @@ import InfoIcon from '@material-ui/icons/InfoOutlined';
 import PlusIcon from '@material-ui/icons/AddCircleOutlineOutlined';
 
 //Core
-import { Card, CardActions, CardHeader, CardMedia, Grid, IconButton, Typography } from '@material-ui/core';
+import { 
+  Button, 
+  Card, 
+  CardActions, 
+  CardHeader, 
+  CardMedia, 
+  Dialog, 
+  DialogActions, 
+  Grid, 
+  IconButton, 
+  Typography,
+} from '@material-ui/core';
+import ItemCardZoomed from './item_card_zoomed';
+import { StoreContext } from '../../../providers/store.provider';
 
 // Styles
 import { useItemCardStyles } from './item_card.style';
 
-const ItemCard = ({ shopItem, handleZoom }) => {
+
+const ItemCard = ({ shopItem }) => {
     const classes = useItemCardStyles(shopItem.image)();
-    const [favourite, setFavourite] = useState(false);
     const { enqueueSnackbar } = useSnackbar();
+    
+    const [state, dispatch] = useContext(StoreContext);
+
+    const [favourite, setFavourite] = useState(false);
+    const [itemCardZoomed, setItemCardZoomed] = useState(false);
 
     const addToFavourites = () => {
+        dispatch({
+          type: 'UPDATE_FAVORITES',
+          payload: shopItem,
+        });
         setFavourite(!favourite);
         if (!favourite) {
          enqueueSnackbar('Added to favourites!', { variant: 'success' });
@@ -28,21 +50,25 @@ const ItemCard = ({ shopItem, handleZoom }) => {
         }
     }
 
-    const addToShoppingCart = () => {
-         enqueueSnackbar('Added to shopping cart!', { variant: 'success' });
+    const addToShoppingCart = async () => {
+      await dispatch({
+        type: 'UPDATE_SHOPPING_CART',
+        payload: shopItem,
+      });
+      enqueueSnackbar('Added to shopping cart!', { variant: 'success' });
     };
 
     return (
+      <Fragment>
         <Grid item xs={12} sm={6} lg={3}>
             <Card className={classes.root}>
             <CardHeader
                 title={<Typography variant="body1">{shopItem.title}</Typography>}
-                subheader={<Typography variant="caption">{shopItem.price}</Typography>}
+                subheader={<Typography variant="caption">${shopItem.price}</Typography>}
             />
             <CardMedia
                 component="div"
                 className={classes.media}
-                style={{ background: `url(${shopItem.image})`, backgroundSize: 'contain', backgroundRepeat: 'no-repeat', backgroundPosition: 'center' }}
                 title={shopItem.title}
             />
             <CardActions disableSpacing className={classes.cardActions}>
@@ -53,7 +79,7 @@ const ItemCard = ({ shopItem, handleZoom }) => {
                         {favourite ? <FavoriteIcon color="error" /> : <FavoriteOutlinedIcon color="secondary" />}
                     </IconButton>
                     <IconButton
-                        onClick={handleZoom}
+                        onClick={() => setItemCardZoomed(true)}
                     >
                         <InfoIcon color="secondary" />
                     </IconButton>
@@ -66,12 +92,42 @@ const ItemCard = ({ shopItem, handleZoom }) => {
             </CardActions>
             </Card>
         </Grid>
+
+        {itemCardZoomed && (
+          <Dialog
+            maxWidth="md"
+            open={itemCardZoomed}
+            onClose={() => setItemCardZoomed(false)} 
+          >
+            {itemCardZoomed && (
+              <ItemCardZoomed 
+                shopItem={shopItem} 
+              />
+            )}
+            <DialogActions>
+              <Button 
+                color="primary" 
+                variant="outlined"
+                onClick={() => setItemCardZoomed(false)} 
+              >
+                Close
+              </Button>
+              <Button 
+                color="primary" 
+                variant="contained"
+                onClick={() => setItemCardZoomed(false)} 
+              >
+                Add
+              </Button>
+            </DialogActions>
+          </Dialog>
+        )}
+      </Fragment>
     );
 };
 
 ItemCard.propTypes = {
-    shopItem: PropTypes.object.isRequired,
-    handleZoom: PropTypes.func.isRequired,
+  shopItem: PropTypes.object.isRequired,
 };
 
 export default ItemCard;

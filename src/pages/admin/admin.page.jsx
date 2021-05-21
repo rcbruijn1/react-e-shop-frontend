@@ -1,7 +1,7 @@
 import React, { Fragment } from 'react';
 
 // Core
-import { Box, Card, CircularProgress } from '@material-ui/core';
+import { Box, Card, CardContent, CircularProgress } from '@material-ui/core';
 import { Main } from '../../components';
 import { CreateShopItemForm, PreferencesForm } from '../../components/forms';
 import { useQuery } from '@apollo/client';
@@ -32,18 +32,27 @@ const AdminPage = () => {
         );
 
     return (
-        <Fragment>
-            <Main>
-                <Card style={{ width: '100%', maxWidth: 1280, padding: 24, margin: 'auto' }}>
-                    <Box p={3}>
-                        <PreferencesForm />
-                    </Box>
-                    <Box p={3}>
-                        <CreateShopItemForm categories={categories} />
-                    </Box>
-                </Card>
-            </Main>
-        </Fragment>
+      <Fragment>
+        <Main>
+          <Box maxWidth={1280} m="auto">
+            <Box mb={3} width="100%">
+              <Card>
+                <CardContent>
+                    <PreferencesForm />
+                </CardContent>
+              </Card>
+            </Box>
+
+            <Box mb={3} width="100%">
+              <Card>
+                <CardContent>
+                  <CreateShopItemForm categories={categories} />
+                </CardContent>
+              </Card>
+            </Box>
+          </Box>
+        </Main>
+      </Fragment>
     );
 };
 

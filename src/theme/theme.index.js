@@ -1,19 +1,19 @@
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme, fade } from '@material-ui/core/styles';
 
 // Colors
 import {
   colorsDefault,
-  colorsDark,
+  colorsJungle,
 } from './colors';
 
 export const THEMES = {
   defaultTheme: 'defaultTheme',
-  darkTheme: 'darkTheme',
+  jungleTheme: 'jungleTheme',
 };
 
 const colorsMap = {
   [THEMES.defaultTheme]: colorsDefault,
-  [THEMES.darkTheme]: colorsDark,
+  [THEMES.jungleTheme]: colorsJungle,
 };
 
 export const createTheme = name => createMuiTheme({
@@ -22,9 +22,24 @@ export const createTheme = name => createMuiTheme({
   },
 
   overrides: {
+    MuiIconButton: {
+      colorSecondary: {
+        color: colorsMap[name].secondary.light,
+      },
+    },
     MuiDialogContent: {
       root: {
-        padding: 24,
+        padding: 40,
+        '&:first-child': {
+          paddingTop: 40,
+        },
+      },
+    },
+    MuiDialogActions: {
+      root: {
+        padding: 16,
+        margin: '0px 16px',
+        borderTop: `1px solid ${colorsMap[name].grey[50]}`,
       },
     },
     MuiDivider: {
@@ -37,11 +52,11 @@ export const createTheme = name => createMuiTheme({
   scrollbar: {
     '&::-webkit-scrollbar': {
       width: 10,
-      background: 'rgba(0, 0, 0, 0.12) !important',
+      background: fade(colorsMap[name].secondary.main, 0.32),
     },
     '&::-webkit-scrollbar-thumb': {
-      background: 'rgba(43, 64, 64, 0.21) !important',
-      borderRadius: 2,
+      background: colorsMap[name].primary.dark,
+      borderRadius: 10,
     },
   },
   border: (color, width = 1, style = 'solid') => `${width}px ${style} ${color}`,

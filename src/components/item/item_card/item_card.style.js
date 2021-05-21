@@ -22,7 +22,3 @@ export const useItemCardStyles = (shopItemImage) => makeStyles(theme => ({
         backgroundColor: theme.palette.primary.dark,
     },
 }));
-
-export const useItemCardZoomedStyles = (shopItemImage) => makeStyles(theme => ({
-
-}));

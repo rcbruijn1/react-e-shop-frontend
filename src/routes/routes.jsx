@@ -14,8 +14,8 @@ export const ROUTES = [
     render: props => <Pages.OverviewPage {...props} />,
   },
   {
-    key: Paths.ADMIN_PATH,
-    path: Paths.ADMIN_PATH,
+    key: Paths.SETTINGS_PATH,
+    path: Paths.SETTINGS_PATH,
     render: props => <Pages.AdminPage {...props} />,
   },
 ];

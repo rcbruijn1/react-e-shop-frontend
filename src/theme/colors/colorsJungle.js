@@ -1,9 +1,13 @@
-export const colorsDark = {
+export const colorsJungle = {
     primary: {
-      main: '#0D1727',
+      light: '#ABBF63',
+      main: '#768C56',
+      dark: '#314035',
     },
     secondary: {
-      main: '#8D90A6',
+      dark: '#A68965',
+      main: '#B3936D',
+      light: '#F2C894',
     },
     error: {
       main: '#fa2d48',
@@ -36,17 +40,17 @@ export const colorsDark = {
   };
   
   export default {
-    ...colorsDark,
+    ...colorsJungle,
     text: {
-      primary: colorsDark.grey[800],
-      secondary: colorsDark.grey[0],
+      primary: colorsJungle.grey[800],
+      secondary: colorsJungle.grey[0],
     },
     layout: {
-        default: colorsDark.secondary.dark,
-        ligth: colorsDark.secondary.main,
+        default: colorsJungle.secondary.dark,
+        ligth: colorsJungle.secondary.main,
     },
     container: {
-      default: colorsDark.grey[0],
+      default: colorsJungle.grey[0],
     },
   };
   

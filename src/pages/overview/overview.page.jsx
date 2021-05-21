@@ -1,16 +1,18 @@
-import React, { Fragment, useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useQuery } from '@apollo/client';
 
+// Icons
+import { Category, ExpandLess, ExpandMore, Favorite } from '@material-ui/icons';
+
 // Core
-import { ItemCard, ItemCardContainer, ItemCardZoomed, Main, SideBar, Toolbar } from '../../components';
+import { Box, CircularProgress, Collapse, List, ListItem, ListItemIcon, ListItemText, Typography, useTheme } from '@material-ui/core';
+import { ItemCard, ItemCardContainer, Main } from '../../components';
 
 // Utils
 import { filterByCategory, retrieveAllCategories } from '../../helpers/shopItems.helper';
 
 // GraphQL
 import { GET_SHOP_ITEMS } from '../../graphql/ShopItem.queries';
-import { Box, CircularProgress, Dialog } from '@material-ui/core';
-import { SelectField } from '../../components/fields';
 
 const GetShopItems = () => {
   const { loading, data } = useQuery(GET_SHOP_ITEMS, {
@@ -22,61 +24,82 @@ const GetShopItems = () => {
 };
 
 const OverviewPage = () => {
-    const [itemCardZoomed, setItemCardZoomed] = useState({ open: false, content: null });
+  const theme = useTheme();
+  const { shopItems, loading } = GetShopItems();
+  const categories = retrieveAllCategories(shopItems);
 
-    const [catalogus, setCatalogus] = useState(null);
-    const [categoryState, setCategory] = useState('all');
+  const [catalogus, setCatalogus] = useState(null);
+  const [collapse, setCollapse] = useState(false);
 
-    const { shopItems, loading } = GetShopItems();
-    const categories = retrieveAllCategories(shopItems);
+  const handleChange = (event, value) => {
+    event.preventDefault();
+    const newCatalogus = filterByCategory(value, shopItems);
+    setCatalogus(newCatalogus);
+  }
 
-    const renderItemCardZoomed = shopItem => {
-      setItemCardZoomed({ open: true, content: shopItem});
-    };
+  useEffect(() => {
+    setCatalogus(shopItems);
+  }, [!loading])
 
-    const handleChange = value => {
-      const newCatalogus = filterByCategory(value, shopItems);
-      setCategory(value);
-      setCatalogus(newCatalogus);
-    }
+  if (loading) return (
+    <Box height="100%" width="100%" display="flex" alignItems="center" justifyContent="center">
+      <CircularProgress color="primary" />
+    </Box>
+  );
 
-    useEffect(() => {
-      setCatalogus(shopItems);
-    }, [!loading])
-  
-    if (loading) return (
-      <Box height="100%" width="100%" display="flex" alignItems="center" justifyContent="center">
-          <CircularProgress color="primary" />
-      </Box>
-      );
+  return (
+    <Box display="flex" height="100%" minHeight="100%">
+      <Box
+        py={3}
+        height="calc(100% - 64px)"
+        position="fixed"
+        top={64}
+        width={250}
+        borderRight={`1px solid ${theme.palette.primary.main}`}
+      >
+        <List>
+          <ListItem button onClick={() => setCollapse(!collapse)}>
+            <ListItemIcon>
+              <Category color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Categories" />
+            {collapse ? <ExpandLess color="primary" /> : <ExpandMore color="primary" />}
+          </ListItem>
 
-    return (
-        <Fragment>
-          <SideBar categories={categories} />
-            <Main withToolbar>
-              <Toolbar>
-                <SelectField
-                      value={categoryState}
-                      items={categories}
-                      onChange={event => handleChange(event.target.value)}
-                />
-              </Toolbar>
-                <ItemCardContainer>
-                {catalogus && catalogus.map(item => (
-                    <ItemCard key={item.id} shopItem={item} handleZoom={() => renderItemCardZoomed(item)} />
-                ))}
-                </ItemCardContainer>
-            </Main>
-
-            <Dialog
-                maxWidth={false}
-                onBackdropClick={() => setItemCardZoomed({ open: false, content: null })}
-                open={itemCardZoomed.open}
+          <Collapse in={collapse} timeout="auto" unmountOnExit>
+            <List component="div" disablePadding>
+              {categories.map(item => (
+                <ListItem
+                  button
+                  key={item}
+                  onClick={event => handleChange(event, item)}
                 >
-                {itemCardZoomed.open && <ItemCardZoomed shopItem={itemCardZoomed.content} handleClose={() => setItemCardZoomed({ open: false, content: null })} />}
-            </Dialog>
-        </Fragment>
-    );
+                  <Typography>
+                    {item.charAt(0).toUpperCase() + item.slice(1)}
+                  </Typography>
+                </ListItem>
+              ))}
+            </List>
+          </Collapse>
+
+          <ListItem button>
+            <ListItemIcon>
+              <Favorite color="primary" />
+            </ListItemIcon>
+            <ListItemText primary="Favorites" />
+          </ListItem>
+        </List>
+      </Box>
+
+      <Main withSidebar>
+        <ItemCardContainer>
+          {catalogus && catalogus.map(item => (
+            <ItemCard key={item.id} shopItem={item} />
+          ))}
+        </ItemCardContainer>
+      </Main>
+    </Box>
+  );
 };
 
 export default OverviewPage;

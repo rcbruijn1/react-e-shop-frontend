@@ -3,7 +3,7 @@ import { SnackbarProvider } from 'notistack';
 import { Route, Redirect, Switch } from 'react-router-dom';
 
 // Core
-import { TopBar, BottomBar, SideBar } from '../../components' ;
+import { TopBar, BottomBar } from '../../components' ;
 
 // Routing
 import { ROUTES } from '../../routes/routes';
@@ -11,7 +11,6 @@ import { OVERVIEW_PATH } from '../../routes/paths';
 
 // Styles
 import { useAppStyles } from './App.style';
-
 
 const App = () => {
   const classes = useAppStyles();
@@ -21,13 +20,11 @@ const App = () => {
       <SnackbarProvider 
         maxSnack={3}
         anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right',
+          vertical: 'bottom',
+          horizontal: 'right',
         }}
       >
         <TopBar />
-        
-        <SideBar />
 
         <Switch>
           {ROUTES.map(routeProps => <Route {...routeProps} />)}

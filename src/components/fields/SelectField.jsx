@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import PropTypes from 'prop-types';
 
 // Core
@@ -23,20 +23,19 @@ const SelectField = props => {
       } = props;
 
     const classes = useFieldStyles();
-    // const errorText = errors && errors[id];
 
     return (
-        <MuiSelectField 
-            style={{ maxHeight: 40, minWidth: 150 }}
+        <MuiSelectField
+            fullWidth
             {...rest}
             label={label}
             value={value ||  ''}
             required={required}
             disabled={disabled}
             onChange={onChange || ((event) => onChange(event.target.value))}
-            // error={!!errorText}
             variant="outlined" 
             color="primary"
+            margin="dense"
         >
             {typeof items ===  'object' ? (
                 Object.values(items).map(item => (

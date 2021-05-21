@@ -1,2 +1,2 @@
 export { default as colorsDefault } from './colorsDefault';
-export { default as colorsDark } from './colorsDark';
+export { default as colorsJungle } from './colorsJungle';
