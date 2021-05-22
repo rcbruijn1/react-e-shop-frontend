@@ -22,6 +22,8 @@ import {
   Typography,
 } from '@material-ui/core';
 import ItemCardZoomed from './item_card_zoomed';
+
+// Utils
 import { StoreContext } from '../../../providers/store.provider';
 
 // Styles

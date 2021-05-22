@@ -6,8 +6,8 @@ import { entityReducer } from '../reducers/entity.reducer';
 
 // Check for a graphql solution first!
 const initialState = {
-  shoppingCart: {},
-  favorites: {},
+  shoppingCart: [],
+  favorites: [],
 };
 
 export const StoreContext = createContext(initialState);

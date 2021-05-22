@@ -20,8 +20,12 @@ export const createTheme = name => createMuiTheme({
   palette: {
       ...colorsMap[name],
   },
-
   overrides: {
+    MuiTypography: {
+      colorTextSecondary: {
+        color: colorsMap[name].grey[400],
+      },
+    },
     MuiIconButton: {
       colorSecondary: {
         color: colorsMap[name].secondary.light,

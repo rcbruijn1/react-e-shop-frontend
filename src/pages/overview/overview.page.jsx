@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useQuery } from '@apollo/client';
 
 // Icons
@@ -10,6 +10,7 @@ import { ItemCard, ItemCardContainer, Main } from '../../components';
 
 // Utils
 import { filterByCategory, retrieveAllCategories } from '../../helpers/shopItems.helper';
+import { StoreContext } from '../../providers/store.provider';
 
 // GraphQL
 import { GET_SHOP_ITEMS } from '../../graphql/ShopItem.queries';
@@ -26,6 +27,7 @@ const GetShopItems = () => {
 const OverviewPage = () => {
   const theme = useTheme();
   const { shopItems, loading } = GetShopItems();
+  const [state] = useContext(StoreContext);
   const categories = retrieveAllCategories(shopItems);
 
   const [catalogus, setCatalogus] = useState(null);
@@ -35,6 +37,12 @@ const OverviewPage = () => {
     event.preventDefault();
     const newCatalogus = filterByCategory(value, shopItems);
     setCatalogus(newCatalogus);
+  };
+
+  const setFavorites = () => {
+    if(state.favorites.length > 0) {
+      setCatalogus(state.favorites);
+    }
   }
 
   useEffect(() => {
@@ -82,7 +90,7 @@ const OverviewPage = () => {
             </List>
           </Collapse>
 
-          <ListItem button>
+          <ListItem button onClick={setFavorites}>
             <ListItemIcon>
               <Favorite color="primary" />
             </ListItemIcon>

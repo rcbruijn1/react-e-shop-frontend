@@ -1,10 +1,11 @@
-import React, { Fragment, useState, forwardRef, useContext } from 'react';
+import React, { Fragment, useState, forwardRef, useContext, useEffect } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 
 // Icons
 import ShoppingCartIcon from '@material-ui/icons/ShoppingCartOutlined';
 import SettingsIcon from '@material-ui/icons/Settings';
 import StoreIcon from '@material-ui/icons/StorefrontOutlined';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 // Core
 import { 
@@ -17,10 +18,16 @@ import {
     DialogContent, 
     Divider, 
     IconButton, 
+    List, 
+    ListItem, 
+    ListItemSecondaryAction, 
+    ListItemText, 
     Toolbar, 
     Typography, 
     Zoom,
 } from '@material-ui/core';
+
+// Utils
 import { OVERVIEW_PATH, SETTINGS_PATH } from '../../../routes/paths';
 import { StoreContext } from '../../../providers/store.provider';
 
@@ -30,16 +37,28 @@ import { useTopBarStyles } from './topbar.style';
 // Assets
 import logo from '../../../logo.svg';
 
-
 const Transition = forwardRef((props, ref) => <Zoom ref={ref} {...props} />);
 
 const TopBar = () => {
     const classes = useTopBarStyles();
     const history = useHistory();
     const location = useLocation();
-    const [state] = useContext(StoreContext);
+    const [state, dispatch] = useContext(StoreContext);
 
-    const [basketOpen, setBasketOpen] = useState(false);
+    const [shoppingCart, setShoppingCart] = useState(false);
+
+    useEffect(() => {
+      if (state.shoppingCart.length === 0) {
+        setShoppingCart(false);
+      };
+    }, [state.shoppingCart]);
+
+    const removeItem = item => {
+      dispatch({
+        type: 'REMOVE_SHOPPING_CART_ITEM',
+        payload: item,
+      });
+    };
 
     return (
         <Fragment>
@@ -55,7 +74,7 @@ const TopBar = () => {
                 <Badge
                   overlap="circle"
                   color="secondary"
-                  badgeContent={Object.keys(state.shoppingCart).length}
+                  badgeContent={state.shoppingCart.length}
                   anchorOrigin={{ 
                       horizontal: 'right', 
                       vertical: 'top',
@@ -63,7 +82,8 @@ const TopBar = () => {
                 >
                   <IconButton
                     color="secondary"
-                    onClick={() => setBasketOpen(true)}
+                    onClick={() => setShoppingCart(true)}
+                    disabled={state.shoppingCart.length === 0}
                   >
                     <ShoppingCartIcon/>
                   </IconButton>
@@ -92,22 +112,39 @@ const TopBar = () => {
             </Toolbar>
           </AppBar>
 
-          <Dialog open={basketOpen} TransitionComponent={Transition} keepMounted classes={{ paper: classes.dialogPaper }}>
+          <Dialog 
+            open={shoppingCart} 
+            TransitionComponent={Transition} 
+            keepMounted 
+            classes={{ paper: classes.dialogPaper }} 
+            maxWidth="sm" 
+            fullWidth
+          >
               <DialogContent>
-                {Object.keys(state.shoppingCart).length === 0 ? (
-                  <Typography variant="body1" color="textPrimary">Your shopping cart is still empty</Typography>
-                ) : (
-                  Object.values(state.shoppingCart).map(item => (
-                    <p>{item.title}</p>
-                  ))
+                {state.shoppingCart.length > 0 && (
+                  <List>
+                    <ListItem divider>
+                      <ListItemText primary={`Total items: ${state.shoppingCart.length}`} />
+                    </ListItem>
+                    {state.shoppingCart.map(item => (
+                      <ListItem key={item.id}>
+                        <ListItemText primary={item.title} secondary={'$' + item.price} />
+                        <ListItemSecondaryAction>
+                          <IconButton edge="end" onClick={() => removeItem(item)}>
+                            <DeleteIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                      </ListItem>
+                    ))}
+                  </List>
                 )}
               </DialogContent>
               <Divider light  />
               <DialogActions>
-              <Button color="primary" variant="outlined" onClick={() => setBasketOpen(false)}>
+              <Button color="primary" variant="outlined" onClick={() => setShoppingCart(false)}>
                   Close
               </Button>
-              <Button color="primary" variant="contained" onClick={() => setBasketOpen(false)}>
+              <Button color="primary" variant="contained" onClick={() => setShoppingCart(false)}>
                   Done
               </Button>
               </DialogActions>
